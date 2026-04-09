@@ -2,7 +2,6 @@ import requests
 import pandas as pd
 import time
 import os
-from datetime import datetime
 
 BASE_URL = "https://api.india.delta.exchange"
 
@@ -13,6 +12,7 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 session = requests.Session()
+
 
 # =========================
 # GET SYMBOLS
@@ -142,8 +142,8 @@ def get_top_pairs(df, funding):
         f_score = abs(funding.get(a, 0)) + abs(funding.get(b, 0))
         top.append((a, b, c, f_score))
 
-    # 🔥 sort by funding strength
-    top = sorted(top, key=lambda x: x[3], reverse=True)
+    # 🔥 NOW SORT BY CORRELATION
+    top = sorted(top, key=lambda x: x[2], reverse=True)
 
     return top[:10]
 
@@ -161,10 +161,10 @@ def send_telegram(message):
 
 
 # =========================
-# BUILD MESSAGE (IMPORTANT)
+# BUILD MESSAGE
 # =========================
 def build_message(pairs, df, funding):
-    msg = "📊 PAIR TRADING SIGNALS\n\n"
+    msg = "📊 PAIR TRADING SIGNALS (Top Correlation)\n\n"
 
     for a, b, corr, _ in pairs:
 
@@ -205,7 +205,6 @@ def main():
     print("🔥 Finding best pairs...")
     pairs = get_top_pairs(df, funding)
 
-    # 🔥 IMPORTANT: single message build
     message = build_message(pairs, df, funding)
 
     print("\n📨 Sending Telegram...")
