@@ -9,7 +9,7 @@ BASE_URL = "https://api.india.delta.exchange"
 TIMEFRAME = "5m"
 MAX_SYMBOLS = 60
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 session = requests.Session()
@@ -152,7 +152,7 @@ def get_top_pairs(df, funding):
 # TELEGRAM
 # =========================
 def send_telegram(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
     requests.post(url, data={
         "chat_id": TELEGRAM_CHAT_ID,
