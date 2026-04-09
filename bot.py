@@ -212,7 +212,7 @@ def format_signal(s1, s2, corr, z, f1, f2, edge):
 # TELEGRAM
 # =========================
 def send_telegram(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
     data = {
         "chat_id": TELEGRAM_CHAT_ID,
